@@ -55,7 +55,6 @@ void numc::print() {
 void numc::gradient_descent(vector<double>& weight, double b, int epoch) {
     const double learning_rate = 0.15;
     vector<double> y_hat (this->Y.size());
-    // vector<double> weight (this->data[0].size()-1);
     
     for (int i = 0; i < x.size(); i++) {
         for (int j = 0; j < x[i].size(); j++) {
@@ -85,18 +84,18 @@ void numc::gradient_descent(vector<double>& weight, double b, int epoch) {
     }
     else {
         for (int i = 0; i < weight.size(); i++) {
-            double asdf = 0;
+            double weight_sum = 0;
             for (int j = 0; j < x[i].size(); j++) {
-                asdf += x[j][i] * (y_hat[j]-Y[j]);
+                weight_sum += x[j][i] * (y_hat[j]-Y[j]);
             }
-            weight[i] = weight[i] - learning_rate * asdf/y_hat.size();
+            weight[i] = weight[i] - learning_rate * weight_sum/y_hat.size();
         }
         
-        double a = 0;
+        double b_sum = 0;
         for (int i = 0; i < y_hat.size(); i++) {
-            a += y_hat[i]-Y[i];
+            b_sum += y_hat[i]-Y[i];
         }
-        b -= learning_rate*a/y_hat.size();
+        b -= learning_rate * b_sum/y_hat.size();
         gradient_descent(weight,b,epoch+1);
     }
 }
